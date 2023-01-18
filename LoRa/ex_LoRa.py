@@ -35,7 +35,7 @@ s.bind(myport)
 
 # handler responisble for receiving packets on UDP Pymesh socket
 def receive_pack():
-    # listen for incomming packets
+    """ listen for incomming packets """
     while True:
         rcv_data, rcv_addr = s.recvfrom(128)
         if len(rcv_data) == 0:
