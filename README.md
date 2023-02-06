@@ -11,7 +11,7 @@ sudo apt-get install python3-pip
 sudo pip3 install --upgrade setuptools
 
 Step 2 - Install Circuit Python Libraries
-sudo pip3 install adafruit-circuitpython-ssd1306
+<br>sudo pip3 install adafruit-circuitpython-ssd1306
 sudo pip3 install adafruit-circuitpython-framebuf
 sudo pip3 install adafruit-circuitpython-rfm9x
 wget https://github.com/adafruit/Adafruit_CircuitPython_framebuf/raw/main/examples/font5x8.bin // font
