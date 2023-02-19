@@ -51,26 +51,17 @@ while True:
     if(packet):
         updateDisplay = True
 
-        # Check if reset packet
-        if(str(packet, "utf-8") == "RST!"):
-            received_packets = 0
-            last_rx_rssi = 0
-            last_rx_snr = 0
-            continue
-
-        # Increment count, get stats
-        received_packets += 1
         last_rx_rssi = rfm9x.last_rssi
         last_rx_snr = rfm9x.last_snr
 
         # Push data back to other node
-        tx_data = "{}".format(received_packets)
+        tx_data = "pong"
         tx_data = bytes(tx_data, "utf-8")
         rfm9x.send(tx_data)
 
     if(updateDisplay):
         display.fill(0)
-        display.text('SRV... RX: {}'.format(received_packets), 15, 0, 1)
+        display.text('FIXED NODE', 15, 0, 1)
         display.text('RSSI: {}, SNR: {}'.format(last_rx_rssi, last_rx_snr), 15, 20, 1)
         display.show()
         updateDisplay = False
