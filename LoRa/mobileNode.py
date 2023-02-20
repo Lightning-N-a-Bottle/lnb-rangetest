@@ -85,7 +85,6 @@ def checkLink():
     return linkQualities
 
 # Main
-updateDisplay = True
 while True:
     # Reset/Clear Screen
     if not btnA.value:
@@ -139,10 +138,3 @@ while True:
         display.text('RSSI: {}, SNR: {}'.format(avgRSSI, avgSNR), 15, 20, 1)
         display.show()
         continue
-
-    if(updateDisplay):
-        display.fill(0)
-        display.text('TX: {}, RX: {}'.format(sent_packets, received_packets), 15, 0, 1)
-        display.text('RSSI: {}, SNR: {}'.format(last_rx_rssi, last_rx_snr), 15, 20, 1)
-        display.show()
-        updateDisplay = False
