@@ -82,6 +82,8 @@ def checkLink():
 
     # Ping 10 times, append to list
     for i in range(10):
+        display.text('packet {}/10'.format(i+1), 15, 20, 1)
+        display.show()
         linkQualities.append(ping())
 
     print(linkQualities)
@@ -89,6 +91,11 @@ def checkLink():
     return linkQualities
 
 # Main
+display.fill(0)
+display.text('Waiting...', 15, 0, 1)
+display.text('', 15, 20, 1)
+display.show()
+
 while True:
     # Reset/Clear Screen
     if not btnA.value:
@@ -102,6 +109,10 @@ while True:
     # Single ping?
     if not btnB.value:
         print("Ping Button")
+        display.fill(0)
+        display.text('Pinging...', 15, 0, 1)
+        display.text('', 15, 20, 1)
+        display.show()
         res = ping()
         display.fill(0)
         display.text('Success: {}'.format(res[0]), 15, 0, 1)
@@ -112,8 +123,14 @@ while True:
     # do a test
     if not btnC.value:
         print("LQ Test")
+        display.fill(0)
+        display.text('Testing...', 15, 0, 1)
+        display.text('', 15, 20, 1)
+        display.show()
         # Get our 10 test values
         res = checkLink()
+
+        print("returned from linkcheck")
 
         # variables to hold test stats
         avgRSSI = 0
