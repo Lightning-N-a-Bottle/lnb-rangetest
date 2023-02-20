@@ -162,7 +162,7 @@ while True:
         # Update display
         display.fill(0)
         display.text('Pings: {}'.format(successfulPings), 15, 0, 1)
-        display.text('RSSI: {}, SNR: {}'.format(round(avgRSSI, 1), round(avgSNR,1), 15, 20, 1)
+        display.text('RSSI: {}, SNR: {}'.format(round(avgRSSI, 1), round(avgSNR,1)), 15, 20, 1)
         display.show()
         print("Pings: {}\nRSSI: {}\nSNR: {}".format(successfulPings, round(avgRSSI, 2), round(avgSNR, 2)))
         continue
