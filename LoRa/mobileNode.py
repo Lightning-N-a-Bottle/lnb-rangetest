@@ -62,7 +62,7 @@ def ping():
     rfm9x.send(tx_data)
     print("Sent ping")
 
-    linkStats = [0,-999, -999]
+    linkStats = [0,-99, -99]
 
     # Wait for a reply, timeout if necessary
     packet = rfm9x.receive()
@@ -82,6 +82,9 @@ def checkLink():
 
     # Ping 10 times, append to list
     for i in range(10):
+        display.fill(0)
+        display.text('Testing...', 15, 0, 1)
+        display.text('', 15, 20, 1)
         display.text('packet {}/10'.format(i+1), 15, 20, 1)
         display.show()
         linkQualities.append(ping())
@@ -142,7 +145,7 @@ while True:
             if(row[0] == 1):
                 successfulPings += 1
                 avgRSSI += row[1]
-                avgSNR += [2]
+                avgSNR += row[2]
             else:
                 continue
 
@@ -159,6 +162,7 @@ while True:
         # Update display
         display.fill(0)
         display.text('Pings: {}'.format(successfulPings), 15, 0, 1)
-        display.text('RSSI: {}, SNR: {}'.format(avgRSSI, avgSNR), 15, 20, 1)
+        display.text('RSSI: {}, SNR: {}'.format(round(avgRSSI, 1), round(avgSNR,1), 15, 20, 1)
         display.show()
+        print("Pings: {}\nRSSI: {}\nSNR: {}".format(successfulPings, round(avgRSSI, 2), round(avgSNR, 2)))
         continue
