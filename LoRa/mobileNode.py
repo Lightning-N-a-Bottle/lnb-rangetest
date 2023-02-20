@@ -60,12 +60,14 @@ def ping():
     # ping the fixed node
     tx_data = bytes("ping", "utf-8")
     rfm9x.send(tx_data)
+    print("Sent ping")
 
     linkStats = [0,-999, -999]
 
     # Wait for a reply, timeout if necessary
     packet = rfm9x.receive()
     if(packet):
+        print("Got response")
         linkStats[0] = 1
         linkStats[1] = rfm9x.last_rssi
         linkStats[2] = rfm9x.last_snr
@@ -75,12 +77,14 @@ def ping():
 
 # Link Quality Checker
 def checkLink():
+    print("linkcheck")
     linkQualities = []
 
     # Ping 10 times, append to list
     for i in range(10):
         linkQualities.append(ping())
 
+    print(linkQualities)
     # Return packet list
     return linkQualities
 
@@ -88,6 +92,7 @@ def checkLink():
 while True:
     # Reset/Clear Screen
     if not btnA.value:
+        print("Clear Screen")
         display.fill(0)
         display.text('Waiting...', 15, 0, 1)
         display.text('', 15, 20, 1)
@@ -96,6 +101,7 @@ while True:
 
     # Single ping?
     if not btnB.value:
+        print("Ping Button")
         res = ping()
         display.fill(0)
         display.text('Success: {}'.format(res[0]), 15, 0, 1)
@@ -105,6 +111,7 @@ while True:
 
     # do a test
     if not btnC.value:
+        print("LQ Test")
         # Get our 10 test values
         res = checkLink()
 
