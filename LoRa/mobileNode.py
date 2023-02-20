@@ -50,9 +50,9 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 # Configure LoRa Radio, lowest throughput but hopefully furthest range
 rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
 rfm9x.tx_power = 23 #TX Power in dBm, between 5 and 23, integer
-rfm9x.signal_bandwidth = 7800 # [7800, 10400, 15600, 20800, 31250, 41700, 62500, 125000, 250000] - Signal bandwidth
+rfm9x.signal_bandwidth = 125000 # [7800, 10400, 15600, 20800, 31250, 41700, 62500, 125000, 250000] - Signal bandwidth
 rfm9x.coding_rate = 8 #[5, 6, 7, 8] - Higher = more FEC, lower = more throughput
-rfm9x.spreading_factor = 12 #[6, 7, 8, ... 10, 11, 12] - Higher = better SNR tolerance, lower = more throughput
+rfm9x.spreading_factor = 8 #[6, 7, 8, ... 10, 11, 12] - Higher = better SNR tolerance, lower = more throughput
 rfm9x.enable_crc = True
 
 # Ping Function
@@ -79,15 +79,21 @@ def ping():
 def checkLink():
     print("linkcheck")
     linkQualities = []
+    fails = 0
 
-    # Ping 10 times, append to list
-    for i in range(10):
+    # Ping 100 times, append to list
+    for i in range(100):
         display.fill(0)
         display.text('Testing...', 15, 0, 1)
         display.text('', 15, 20, 1)
         display.text('packet {}/10'.format(i+1), 15, 20, 1)
         display.show()
-        linkQualities.append(ping())
+        res = ping()
+        if(res[0] == 0):
+            fails += 1
+        if(fails >= 10):
+            break
+        linkQualities.append(res)
 
     print(linkQualities)
     # Return packet list
@@ -118,8 +124,8 @@ while True:
         display.show()
         res = ping()
         display.fill(0)
-        display.text('Success: {}'.format(res[0]), 15, 0, 1)
-        display.text('RSSI: {}, SNR: {}'.format(res[1], res[2]), 15, 20, 1)
+        display.text('OK:{}'.format(res[0]), 15, 0, 1)
+        display.text('RSSI:{},SNR:{}'.format(res[1], res[2]), 15, 20, 1)
         display.show()
         continue
 
@@ -161,8 +167,8 @@ while True:
 
         # Update display
         display.fill(0)
-        display.text('Pings: {}'.format(successfulPings), 15, 0, 1)
-        display.text('RSSI: {}, SNR: {}'.format(round(avgRSSI, 1), round(avgSNR,1)), 15, 20, 1)
+        display.text('ATT:100,OK:{}'.format(successfulPings), 15, 0, 1)
+        display.text('RSSI:{},SNR:{}'.format(round(avgRSSI, 1), round(avgSNR,1)), 15, 20, 1)
         display.show()
         print("Pings: {}\nRSSI: {}\nSNR: {}".format(successfulPings, round(avgRSSI, 2), round(avgSNR, 2)))
         continue

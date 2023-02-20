@@ -35,9 +35,9 @@ spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 # Configure LoRa Radio, lowest throughput but hopefully furthest range
 rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
 rfm9x.tx_power = 23 #TX Power in dBm, between 5 and 23, integer
-rfm9x.signal_bandwidth = 7800 # [7800, 10400, 15600, 20800, 31250, 41700, 62500, 125000, 250000] - Signal bandwidth
+rfm9x.signal_bandwidth = 125000 # [7800, 10400, 15600, 20800, 31250, 41700, 62500, 125000, 250000] - Signal bandwidth
 rfm9x.coding_rate = 8 #[5, 6, 7, 8] - Higher = more FEC, lower = more throughput
-rfm9x.spreading_factor = 12 #[6, 7, 8, ... 10, 11, 12] - Higher = better SNR tolerance, lower = more throughput
+rfm9x.spreading_factor = 8 #[6, 7, 8, ... 10, 11, 12] - Higher = better SNR tolerance, lower = more throughput
 rfm9x.enable_crc = True
 
 received_packets = 0
